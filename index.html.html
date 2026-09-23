@@ -21,47 +21,267 @@
       --error: #f43f5e;
       --error-glow: rgba(244, 63, 94, 0.35);
       --boss: #a855f7;
+      
       --q-font: 1.35rem;
       --opt-font: 1.15rem;
       --body-font: 1.05rem;
     }
+
     body.font-xl { --q-font: 1.6rem; --opt-font: 1.35rem; --body-font: 1.2rem; }
     body.font-sm { --q-font: 1.18rem; --opt-font: 1.02rem; --body-font: 0.95rem; }
+
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: radial-gradient(circle at 15% 15%, #1e1b4b 0%, #0b1120 60%, #020617 100%); color: var(--text); min-height: 100vh; font-size: var(--body-font); padding-bottom: 50px; }
-    .header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--card-border); padding: 16px 20px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); }
-    .header h1 { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .font-controller { display: flex; align-items: center; background: rgba(255,255,255,0.08); padding: 3px 6px; border-radius: 9999px; border: 1px solid var(--card-border); }
-    .font-btn { background: transparent; border: none; color: #cbd5e1; padding: 4px 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; border-radius: 9999px; transition: 0.2s; }
-    .font-btn.active { background: #3b82f6; color: #fff; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+    
+    body {
+      background: radial-gradient(circle at 15% 15%, #1e1b4b 0%, #0b1120 60%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: var(--body-font);
+      padding-bottom: 50px;
+    }
+
+    .header {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .header h1 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .font-controller {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      padding: 3px 6px;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+    }
+    .font-btn {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 4px 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border-radius: 9999px;
+      transition: 0.2s;
+    }
+    .font-btn.active {
+      background: #3b82f6;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
     .container { max-width: 720px; margin: 16px auto 0; padding: 0 16px; }
-    .glass-card { background: var(--card-bg); backdrop-filter: blur(14px); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1); margin-bottom: 20px; }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
+    }
+
     .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; color: #e2e8f0; }
-    select, input[type="text"], input[type="email"], input[type="number"] { width: 100%; padding: 14px 16px; border: 1.5px solid rgba(255, 255, 255, 0.15); border-radius: 12px; background: #0f172a; color: #fff; font-size: 1.05rem; outline: none; }
-    select:focus, input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
-    .btn-main { width: 100%; padding: 16px 20px; border-radius: 14px; border: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #fff; font-size: 1.2rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px var(--primary-glow); display: flex; justify-content: center; align-items: center; gap: 10px; transition: all 0.2s; }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: #e2e8f0;
+    }
+    select, input[type="text"], input[type="email"], input[type="number"] {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 1.05rem;
+      outline: none;
+    }
+    select:focus, input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-main {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 25px var(--primary-glow);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
     .btn-main:active { transform: scale(0.98); }
-    .btn-secondary { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--card-border); color: #f1f5f9; padding: 14px 20px; border-radius: 14px; font-size: 1.05rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--card-border);
+      color: #f1f5f9;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
     .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
-    .tag-badge { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 800; }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
     .diff-easy { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }
     .diff-medium { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); }
     .diff-hard { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
     .diff-boss { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.4); }
-    .timer-badge { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 8px; font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; }
-    .question-title { font-size: var(--q-font); font-weight: 800; line-height: 1.6; color: #ffffff; margin-bottom: 22px; }
-    .option-card { width: 100%; min-height: 60px; text-align: left; padding: 16px 18px; margin-bottom: 12px; border: 1.5px solid rgba(255, 255, 255, 0.12); background: rgba(15, 23, 42, 0.65); border-radius: 14px; font-size: var(--opt-font); font-weight: 500; line-height: 1.55; color: #f1f5f9; cursor: pointer; display: flex; align-items: center; gap: 14px; }
-    .badge-letter { flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; color: #38bdf8; }
-    .option-card.correct { background: rgba(34, 197, 94, 0.25) !important; border-color: #22c55e !important; color: #f0fdf4 !important; font-weight: 700; box-shadow: 0 0 16px var(--success-glow); }
+
+    .timer-badge {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .question-title {
+      font-size: var(--q-font);
+      font-weight: 800;
+      line-height: 1.6;
+      color: #ffffff;
+      margin-bottom: 22px;
+    }
+
+    .option-card {
+      width: 100%;
+      min-height: 60px;
+      text-align: left;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.65);
+      border-radius: 14px;
+      font-size: var(--opt-font);
+      font-weight: 500;
+      line-height: 1.55;
+      color: #f1f5f9;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .badge-letter {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #38bdf8;
+    }
+    .option-card.correct {
+      background: rgba(34, 197, 94, 0.25) !important;
+      border-color: #22c55e !important;
+      color: #f0fdf4 !important;
+      font-weight: 700;
+      box-shadow: 0 0 16px var(--success-glow);
+    }
     .option-card.correct .badge-letter { background: #22c55e; color: #052e16; }
-    .option-card.wrong { background: rgba(244, 63, 94, 0.25) !important; border-color: #f43f5e !important; color: #fff1f2 !important; box-shadow: 0 0 16px var(--error-glow); }
+    .option-card.wrong {
+      background: rgba(244, 63, 94, 0.25) !important;
+      border-color: #f43f5e !important;
+      color: #fff1f2 !important;
+      box-shadow: 0 0 16px var(--error-glow);
+    }
     .option-card.wrong .badge-letter { background: #f43f5e; color: #fff; }
-    .scenario-box { background: rgba(168, 85, 247, 0.12); border-left: 5px solid #a855f7; padding: 16px; border-radius: 0 12px 12px 0; margin-bottom: 18px; font-size: calc(var(--opt-font) * 0.95); line-height: 1.65; color: #e9d5ff; }
-    .exp-card { margin-top: 18px; padding: 18px; border-radius: 14px; background: rgba(15, 23, 42, 0.92); border: 1.5px dashed rgba(255, 255, 255, 0.2); font-size: calc(var(--opt-font) * 0.92); line-height: 1.65; display: none; }
-    .mode-tab-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-    .mode-tab { padding: 14px; border-radius: 12px; border: 1.5px solid var(--card-border); background: rgba(255,255,255,0.05); color: #cbd5e1; font-weight: 700; cursor: pointer; text-align: center; transition: 0.2s; }
-    .mode-tab.active { background: #3b82f6; border-color: #60a5fa; color: #fff; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+
+    .scenario-box {
+      background: rgba(168, 85, 247, 0.12);
+      border-left: 5px solid #a855f7;
+      padding: 16px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 18px;
+      font-size: calc(var(--opt-font) * 0.95);
+      line-height: 1.65;
+      color: #e9d5ff;
+    }
+
+    .exp-card {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1.5px dashed rgba(255, 255, 255, 0.2);
+      font-size: calc(var(--opt-font) * 0.92);
+      line-height: 1.65;
+      display: none;
+    }
+
+    .mode-tab-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .mode-tab {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--card-border);
+      background: rgba(255,255,255,0.05);
+      color: #cbd5e1;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.2s;
+    }
+    .mode-tab.active {
+      background: #3b82f6;
+      border-color: #60a5fa;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -113,14 +333,13 @@
       </div>
 
       <div class="form-group">
-        <label>練習題數（最多可設 200 題）</label>
+        <label>練習題數（題庫全題收錄）</label>
         <select id="pCountSelect">
           <option value="5">5 題（快速微測）</option>
           <option value="10" selected>10 題（標準單元檢測）</option>
           <option value="20">20 題（綜合模組評量）</option>
-          <option value="50">50 題（考前模擬考）</option>
-          <option value="100">100 題（全真大題庫衝刺）</option>
-          <option value="200">200 題（全書完整題庫挑戰）</option>
+          <option value="40">40 題（大單元模擬考）</option>
+          <option value="60">60 題（全真大題庫衝刺）</option>
         </select>
       </div>
 
@@ -150,7 +369,7 @@
         </div>
         <div class="form-group">
           <label>指定測驗題數</label>
-          <input type="number" id="tCountInput" value="20" min="5" max="200" />
+          <input type="number" id="tCountInput" value="20" min="5" max="60" />
         </div>
       </div>
 
@@ -288,42 +507,270 @@
 </div>
 
 <script>
+  // 【完整真實教科書題庫】：每題皆有完整且獨特的選項與教科書詳解
   const QUESTION_BANK = [
-    { id: 1, diff: 'easy', type: 'law', q: "民國84年修正公布之《消防法》，將下列何者列為消防三大核心任務之一？", opts: ["火災調查", "為民服務", "緊急救護", "公共安全檢查"], ans: 2, src: "教科書 P.8", exp: "《消防法》第 1 條明定消防三大任務為「預防火災、搶救災害、緊急救護」。" },
-    { id: 2, diff: 'easy', type: 'law', q: "依《緊急醫療救護法施行細則》第 2 條，大量傷病患定義指單一事故傷病患人數達多少人以上？", opts: ["10人", "15人", "20人", "30人"], ans: 1, src: "教科書 P.16", exp: "大量傷病患法定標準為傷病患人數達 15 人以上，或預判可能達 15 人以上。" },
-    { id: 3, diff: 'easy', type: 'airway', q: "在人體呼吸系統解剖中，成人呼吸道中最狹窄之解剖位置為何處？", opts: ["鼻後孔", "環狀軟骨", "聲門（聲帶）", "主氣管分叉處"], ans: 2, src: "教科書 P.38", exp: "成人呼吸道最狹窄處為聲門（Glottis）；小兒呼吸道最窄處則為環狀軟骨。" },
-    { id: 4, diff: 'easy', type: 'cpr', q: "高品質心肺復甦術中，成人胸外按壓之速率與深度標準為何？", opts: ["80-100次/分、4-5公分", "100-120次/分、5-6公分", "120-140次/分、6-7公分", "100-120次/分、至少7公分"], ans: 1, src: "教科書 P.123", exp: "成人高品質 CPR 速率為 100~120 次/分，深度為 5~6 公分，且每次按壓確保完全回彈。" },
-    { id: 5, diff: 'medium', type: 'trauma', q: "外傷病患若出現收縮壓明顯下降（BP 78/46 mmHg）、心跳 132 次/分，最可能處於失血性休克第幾級？", opts: ["第一級", "第二級", "第三級以上（失代償）", "第零級"], ans: 2, src: "教科書 P.229", exp: "第一、二級收縮壓尚能維持正常；當收縮壓下降（<90 mmHg）時，失血量通常已達 30% 以上，屬於第三級或第四級休克。" },
-    { id: 6, diff: 'medium', type: 'cpr', q: "急救 OHCA 患者時已置入進階呼吸道，此時吐氣末二氧化碳（EtCO2）數值突然由 14 躍升至 48 mmHg，最強烈提示何事？", opts: ["管路脫落入食道", "壓胸人員疲乏", "病患恢復自主循環（ROSC）", "肺水腫加劇"], ans: 2, src: "教科書 P.124", exp: "急救過程中 EtCO2 突發性劇幅躍升（通常超過 40 mmHg），為自主血液循環恢復（ROSC）之最靈敏客觀指標。" },
-    { id: 7, diff: 'medium', type: 'trauma', q: "嚴重創傷致死三聯徵（Trauma Triad of Death）不包含下列何者？", opts: ["低體溫", "代謝性酸中毒", "凝血功能障礙", "高血壓"], ans: 3, src: "教科書 P.255", exp: "外傷致死三聯徵包括：低體溫、酸中毒、凝血異常；失血休克表現為低血壓。" },
-    { id: 8, diff: 'hard', type: 'medical', q: "58歲男性突發劇烈胸痛，心電圖 Lead II、III、aVF 出現 ST 段上升，BP 84/52 mmHg，下列處置何者列為絕對禁忌？", opts: ["嚼碎吞服 Aspirin 300mg", "給予靜脈輸液生理食鹽水", "舌下含服硝化甘油（NTG）", "加做右側心電圖 V4R"], ans: 2, src: "教科書 P.135, P.232", exp: "下壁梗塞常合併右心室梗塞，病患前負荷高度依賴容積。給予血管擴張劑 NTG 會造成心輸出量驟降致命，且收縮壓 <90 mmHg 亦為絕對禁忌。" },
-    { id: 9, diff: 'hard', type: 'trauma', q: "10歲兒童體重 35 kg，因外傷休克需到院前輸注等張輸液，依 20 mL/kg 原則，首次輸注量應為多少？", opts: ["350 mL", "500 mL", "700 mL", "1000 mL"], ans: 2, src: "教科書 P.257", exp: "小兒休克輸液為 20 mL/kg：35 kg × 20 mL/kg = 700 mL。" },
-    { id: 10, diff: 'hard', type: 'trauma', q: "張力性氣胸病患已出現發紺、休克與氣管偏移，執行針刺減壓（Needle Decompression）最新建議解剖穿刺位置為何？", opts: ["患側第2肋間鎖骨中線、沿肋骨下緣", "患側第4或第5肋間腋前線至腋中線、沿肋骨上緣", "患側第6肋間腋後線", "劍突下方45度角朝左肩"], ans: 1, src: "教科書 P.175 及附錄操作規範", exp: "新版指引建議優先採患側第 4/5 肋間腋前線至腋中線，且因神經血管束走在肋骨下緣，進針必須緊靠「肋骨上緣」穿刺。" },
-    { id: 101, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境】EMT-2 抵達鐵皮工廠氣爆火災現場。30歲男性（體重 70 kg）自行爬出後倒地，主訴呼吸極度困難與全身劇痛。現場鼻毛焦黑、說話聲音沙啞伴隨吸氣喘鳴（Stridor）；整面胸腹部（18%）、整隻左手臂（9%）及雙大腿（18%）呈現二度至三度焦黑水泡脫屑；BP 78/46 mmHg、HR 136 bpm、SpO2 86%。", q: "【第 1 題】評估該傷病患目前最急迫危及生命的處置優先順序為何？", opts: ["立即塗抹燒燙傷藥膏並冰敷患肢", "鼻毛焦黑且聲音沙啞提示吸入性灼傷氣道水腫，應立即給予高濃度純氧並備妥進階呼吸道防窒息", "立即施打三條止血帶", "請病患自行大量喝水以防體液流失"], ans: 1, src: "教科書 P.190, P.225", exp: "吸入性灼傷伴隨聲音沙啞與 Stridor 提示上呼吸道急速水腫窒息，呼吸道管理（Airway）永遠最優先。" },
-    { id: 102, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境續題】傷患呼吸道處置完畢後，救護人員評估其二度至三度體表面積（%TBSA）。", q: "【第 2 題】依據成人「九則定律（Rule of Nines）」，該病患二至三度燒傷面積總合為多少？", opts: ["27%", "36%", "45%", "54%"], ans: 2, src: "教科書 P.190", exp: "胸腹部（18%）+ 左手臂（9%）+ 雙大腿（9% + 9% = 18%）= 18 + 9 + 18 = 45%。" },
-    { id: 103, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境續題】傷患體重 70 kg，二至三度燒燙傷面積確認為 45%，現場呈現低血壓休克。", q: "【第 3 題】依據 Parkland 公式（4 mL × kg × %TBSA），受傷後前 8 小時應輸注之平衡鹽輸液量為何？", opts: ["3,150 mL", "6,300 mL", "12,600 mL", "5,040 mL"], ans: 1, src: "教科書 P.192", exp: "24 小時總量 = 4 × 70 × 45 = 12,600 mL。受傷後前 8 小時給予半量：12,600 ÷ 2 = 6,300 mL。" },
-    { id: 104, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境續題】救護車運送途中，病患突然意識喪失，監測器脈搏血氧儀顯示 SpO2 99%，但病患嘴唇呈現櫻桃紅色。", q: "【第 4 題】下列關於脈搏血氧儀數值之解讀與後續處置，何者最正確？", opts: ["SpO2 99% 代表血氧非常充足，可立即調降氧氣流量為鼻導管 2 L/min", "一氧化碳中毒會使一般血氧儀產生偽性正常（99%），切勿被騙，必須持續給予 NRM 100% 高濃度純氧置換碳氧血紅素", "立即給予口服降血壓藥", "立即拔除所有靜脈管路"], ans: 1, src: "教科書 P.241", exp: "一氧化碳與血紅素結合力是氧氣的 200 倍以上，傳統雙波長血氧儀無法分辨碳氧血紅素（HbCO），會偽性顯示高讀數。首要處置仍為 100% 氧氣。" }
+    // 🟢 基礎核心（法規、常模、器材）
+    {
+      id: 1, diff: 'easy', type: 'law',
+      q: "何者為外傷最常見的休克型態？",
+      opts: ["出血性休克", "心因性休克", "阻塞性休克", "分佈型休克"],
+      ans: 0, src: "教科書 P.255",
+      exp: "外傷病人因血管破裂或實質臟器撕裂傷，最常造成血液大量流失，出血性休克為外傷最常見之型態。"
+    },
+    {
+      id: 2, diff: 'easy', type: 'law',
+      q: "民國84年修正公布之《消防法》，將下列何者列為消防三大核心任務之一？",
+      opts: ["火災預防、災害搶救、緊急救護", "火災調查、危險品管理、緊急救護", "安全檢查、防火宣導、救護技術", "民防動員、天然災害搶救、救護訓練"],
+      ans: 0, src: "教科書 P.8",
+      exp: "《消防法》第 1 條明定消防任務為「預防火災、搶救災害、緊急救護」三大任務。"
+    },
+    {
+      id: 3, diff: 'easy', type: 'law',
+      q: "依《緊急醫療救護法施行細則》第 2 條規定，大量傷病患指單一事故傷病患人數達多少人以上？",
+      opts: ["10人以上", "15人以上", "20人以上", "30人以上"],
+      ans: 1, src: "教科書 P.16",
+      exp: "大量傷病患指單一事故、災害發生之傷病患人數達「15人以上」，或預判可能達15人以上者。"
+    },
+    {
+      id: 4, diff: 'easy', type: 'law',
+      q: "根據救護技術員管理辦法，中級救護技術員（EMT-2）於三年證書效期內，繼續教育時數應累計達多少小時以上？",
+      opts: ["24小時以上", "48小時以上", "72小時以上", "96小時以上"],
+      ans: 2, src: "教科書 P.19",
+      exp: "中級救護技術員證書效期為三年，三年內應累計 72 小時以上之繼續教育訓練（且每年至少24小時）。"
+    },
+    {
+      id: 5, diff: 'easy', type: 'law',
+      q: "根據《緊急醫療救護法》第 34 條規定，救護紀錄表應分別由救護車設置機關及醫療機構保存至少多久？",
+      opts: ["3年", "5年", "7年", "10年"],
+      ans: 2, src: "教科書 P.19",
+      exp: "依《緊急醫療救護法》第 34 條，救護紀錄表應保存至少 7 年。"
+    },
+    {
+      id: 6, diff: 'easy', type: 'airway',
+      q: "在人體呼吸系統解剖中，何處為上、下呼吸道的交界？且在成人呼吸道中最狹窄之解剖位置為何？",
+      opts: ["交界為咽部；最窄處為鼻孔", "交界為聲門；最窄處為聲門", "交界為聲門；最窄處為環狀軟骨", "交界為主氣管；最窄處為口咽部"],
+      ans: 1, src: "教科書 P.38",
+      exp: "聲門是上下呼吸道交界，亦為成人呼吸道最狹窄處（小兒呼吸道最窄處則為環狀軟骨）。"
+    },
+    {
+      id: 7, diff: 'easy', type: 'cpr',
+      q: "高品質心肺復甦術（CPR）中，成人胸外按壓之速率與深度標準為何？",
+      opts: ["80~100次/分，約3~4公分深", "100~120次/分，約5~6公分深", "120~140次/分，深度超過7公分", "100~120次/分，深度不得超過4公分"],
+      ans: 1, src: "教科書 P.123",
+      exp: "成人高品質 CPR 速率為 100~120 次/分，深度 5~6 公分，且每次按壓確保完全回彈。"
+    },
+    {
+      id: 8, diff: 'easy', type: 'cpr',
+      q: "操作袋瓣罩甦醒球（BVM）人工呼吸，對於有脈搏但無適當自主呼吸之成人，人工呼吸給氣頻率為何？",
+      opts: ["每 2~3 秒給 1 口氣", "每 6 秒給 1 口氣（每分鐘10次）", "每 10 秒給 1 口氣", "每 15 秒連續給 2 口氣"],
+      ans: 1, src: "教科書 P.68",
+      exp: "成人有脈搏無適當呼吸時，人工呼吸給氣頻率為每 6 秒 1 次（每分鐘 10 次），每口氣吹氣時間約 1 秒使胸廓微升。"
+    },
+    {
+      id: 9, diff: 'easy', type: 'trauma',
+      q: "外傷大出血處理時，關於肢體截斷（斷肢）之保存方式，下列何者錯誤？",
+      opts: ["殘肢以生理食鹽水濕紗布包裹", "包裹好的殘肢放入防水塑膠袋內密封", "將密封之袋子置入裝有冰水混合物之容器冷藏", "將斷肢直接浸泡於純冰塊或純酒精中消毒保鮮"],
+      ans: 3, src: "教科書 P.260",
+      exp: "斷肢切忌直接浸泡於冰水、清水、冰塊或酒精中，以免組織凍傷壞死；應以濕紗包覆、密封袋裝後隔水冰浴。"
+    },
+    {
+      id: 10, diff: 'easy', type: 'trauma',
+      q: "下列何者「不屬於」外傷致死三聯徵（Trauma Triad of Death）之組成因子？",
+      opts: ["低體溫（Hypothermia）", "酸血症（Acidosis）", "凝血功能障礙（Coagulopathy）", "高血壓（Hypertension）"],
+      ans: 3, src: "教科書 P.255",
+      exp: "外傷致死三聯徵為低體溫、酸血症與凝血病變；失血大創傷表現為低血壓休克。"
+    },
+
+    // 🟡 臨床鑑別（休克分級、GCS、檢傷、心律）
+    {
+      id: 11, diff: 'medium', type: 'trauma',
+      q: "神經損傷引起之神經性休克（Neurogenic Shock），其主要病態生理機轉為何？",
+      opts: ["心肌梗塞造成心輸出量驟減", "因高位脊髓損傷，導致交感神經傳導中斷失能", "血管受血栓阻塞，血液無法回流", "副交感神經完全壞死失效造成心搏過速"],
+      ans: 1, src: "教科書 P.255",
+      exp: "神經性休克源自高位頸胸椎脊髓受創，交感神經傳導中斷引起全身血管平滑肌廣泛舒張，且副交感相對亢進造成心搏過緩。"
+    },
+    {
+      id: 12, diff: 'medium', type: 'trauma',
+      q: "創傷病人出現「血壓下降（BP < 90 mmHg）、心跳過快、呼吸急促」時，屬於失血性休克分級中的哪一級？",
+      opts: ["第一級", "第二級", "第三級以上（失代償期）", "第零級"],
+      ans: 2, src: "教科書 P.229",
+      exp: "第一、二級收縮壓尚能維持代償正常；當收縮壓下降時代表代償失調，失血量通常達30%以上，屬於第三級或第四級休克。"
+    },
+    {
+      id: 13, diff: 'medium', type: 'trauma',
+      q: "一名 55 歲男性突發胸痛與呼吸困難，檢查發現血壓下降、頸靜脈怒張、呼吸急促，且心電圖顯示 PEA，雙肺呼吸音對稱。最可能的休克類型為：",
+      opts: ["心包膜填塞引起之阻塞性休克", "神經性休克", "低血容性休克", "敗血性分佈性休克"],
+      ans: 0, src: "教科書 P.227, P.228",
+      exp: "頸靜脈怒張提示右心血液回流受阻，伴隨低血壓與 PEA，高度提示張力性氣胸或心包膜填塞等阻塞性休克。"
+    },
+    {
+      id: 14, diff: 'medium', type: 'trauma',
+      q: "下列閉鎖性骨折部位之內部預估失血量常模，何者明顯錯誤（明顯低估）？",
+      opts: ["單根肋骨骨折約 125 mL", "脛骨骨折約 500~1000 mL", "骨盆骨折約 1500~2000 mL 以上", "肱骨骨折約 50~100 mL"],
+      ans: 3, src: "教科書 P.287",
+      exp: "肱骨骨折預估出血量常模約為 250~500 mL，50~100 mL 明顯嚴重低估。"
+    },
+    {
+      id: 15, diff: 'medium', type: 'trauma',
+      q: "腹部鈍挫傷與穿刺刀傷中，最常造成損傷破裂的實質臟器分別為何？",
+      opts: ["鈍傷最常見為脾臟；刀刺傷最常見為肝臟", "鈍傷最常見為肝臟；刀刺傷最常見為脾臟", "鈍傷最常見為胃；刀刺傷最常見為小腸", "鈍傷最常見為膀胱；刀刺傷最常見為胰臟"],
+      ans: 0, src: "教科書 P.282",
+      exp: "腹部鈍傷中脆弱多血管的脾臟最常破裂；穿刺刀傷中前腹壁面積最大的實質臟器肝臟最易被刺傷。"
+    },
+    {
+      id: 16, diff: 'medium', type: 'trauma',
+      q: "胸壁出現吸氣時胸壁向內凹陷、呼氣時胸壁反而向外膨出的反常運動，且相鄰 2 根以上肋骨每根有 2 處以上骨折，此病理狀態稱為：",
+      opts: ["自發性氣胸", "張力性氣胸", "開放性氣胸", "連枷胸（Flail Chest）"],
+      ans: 3, src: "教科書 P.280",
+      exp: "此為連枷胸之奇異反常呼吸運動（Paradoxical motion），最主要危及生命的內在問題是潛在的肺挫傷。"
+    },
+    {
+      id: 17, diff: 'medium', type: 'trauma',
+      q: "傷患車禍後倒地，對救護員呼喚只能發出呻吟聲，疼痛刺激時雙眼可睜開，肢體呈現避痛退縮反應，請問此病患 GCS 昏迷指數為幾分？",
+      opts: ["6 分", "7 分", "8 分", "9 分"],
+      ans: 2, src: "教科書 P.51",
+      exp: "E2（痛睜眼） + V2（呻吟不成詞） + M4（痛避縮退縮） = 8 分。"
+    },
+    {
+      id: 18, diff: 'medium', type: 'trauma',
+      q: "頭部外傷患者若發生急性顱內壓升高（ICP），下列何者「非」庫欣氏三徵候（Cushing's Triad）之典型表現？",
+      opts: ["收縮壓上升且脈壓變寬", "心跳急遽變快（HR > 140 bpm）", "心跳變慢（心搏過緩）", "呼吸不規則或深慢"],
+      ans: 1, src: "教科書 P.270",
+      exp: "庫欣氏三聯徵為高血壓（脈壓寬）、心搏過緩、呼吸不規則。心跳快非其特徵。"
+    },
+    {
+      id: 19, diff: 'medium', type: 'trauma',
+      q: "外傷傷患面部受撞擊後，眼眶周圍出現廣泛瘀血（浣熊眼）並伴隨清澈腦脊髓液鼻漏，應高度懷疑何處骨折？",
+      opts: ["前顱底骨折", "中顱底骨折", "岩樣骨骨折", "後顱窩骨折"],
+      ans: 0, src: "教科書 P.217",
+      exp: "浣熊眼（Raccoon eyes）與腦脊髓液鼻漏為前顱底骨折典型特徵；中顱底骨折表現為耳後乳突瘀斑（Battle's sign）與耳漏。"
+    },
+    {
+      id: 20, diff: 'medium', type: 'cpr',
+      q: "急救 OHCA 患者時已建立進階呼吸道，此時連續波形二氧化碳（EtCO2）數值突然由 12 驟升為 46 mmHg，最強烈提示何種臨床狀況？",
+      opts: ["進階呼吸道脫落滑入食道", "壓胸人員體力耗竭", "病患恢復自主血液循環（ROSC）", "胸外按壓產生嚴重肺挫傷"],
+      ans: 2, src: "教科書 P.124",
+      exp: "急救過程中 EtCO2 驟升至 40 mmHg 以上，代表肺部血流灌注恢復，為 ROSC 最靈敏客觀之無創指標。"
+    },
+
+    // 🔴 決策處置（急重症禁忌、給藥、技術介入）
+    {
+      id: 21, diff: 'hard', type: 'medical',
+      q: "58歲男性突發劇烈胸痛，心電圖 Lead II、III、aVF 出現 ST 段上升，BP 84/52 mmHg，下列處置何者列為絕對禁忌？",
+      opts: ["給予氧氣面罩維持血氧", "舌下含服硝化甘油（NTG）", "經口嚼碎吞服 Aspirin 300mg", "建立靜脈輸液生理食鹽水"],
+      ans: 1, src: "教科書 P.135, P.232",
+      exp: "下壁心肌梗塞常合併右心室梗塞，病患前負荷高度依賴容積。給予血管擴張劑 NTG 會造成心輸出量崩跌休克，且收縮壓 < 90 mmHg 亦為絕對禁忌。"
+    },
+    {
+      id: 22, diff: 'hard', type: 'trauma',
+      q: "一名 10 歲兒童體重 35 公斤，因嚴重創傷失血呈現休克需到院前輸液，依 20 mL/kg 原則，首次輸液劑量應為多少？",
+      opts: ["350 mL", "500 mL", "700 mL", "1000 mL"],
+      ans: 2, src: "教科書 P.257",
+      exp: "小兒創傷休克等張輸液劑量以 20 mL/kg 計算：35 kg × 20 mL/kg = 700 mL。"
+    },
+    {
+      id: 23, diff: 'hard', type: 'trauma',
+      q: "張力性氣胸病患已出現發紺、休克與氣管偏移，執行針刺減壓（Needle Decompression）最新建議解剖穿刺位置為何？",
+      opts: ["患側第2肋間鎖骨中線、沿第3肋骨下緣進針", "患側第4或第5肋間腋前線至腋中線、緊靠肋骨上緣進針", "患側第6肋間腋後線進針", "劍突下方45度角朝左肩進針"],
+      ans: 1, src: "教科書 P.175 及附錄操作規範",
+      exp: "新版指引優先建議患側第 4/5 肋間腋前線至腋中線，且因神經血管束走在肋骨下緣，穿刺針必須緊靠「肋骨上緣」進針以防大出血。"
+    },
+    {
+      id: 24, diff: 'hard', type: 'trauma',
+      q: "關於傷口填塞止血（Wound Packing）技術，下列哪一個解剖部位是「絕對嚴格禁忌」施行填塞？",
+      opts: ["腹股溝（鼠蹊部）深部撕裂傷", "腋下深部出血傷口", "腹部開放性穿刺傷", "大腿根部無法使用止血帶之深傷口"],
+      ans: 2, src: "教科書 P.142",
+      exp: "胸腔與腹腔為開放體腔，深部填塞紗布毫無骨骼加壓支撐，無法止血且會造成嚴重感染，屬絕對禁忌；填塞僅能用於鼠蹊、腋下等交界處傷口。"
+    },
+    {
+      id: 25, diff: 'hard', type: 'trauma',
+      q: "進行傷口填塞止血時，若現場使用的是一般「未加藥普通無菌紗布」，在塞滿傷口後，外部徒手持續加壓的時間至少需維持多久？",
+      opts: ["1 分鐘", "3 分鐘", "5 分鐘", "10 分鐘"],
+      ans: 3, src: "教科書 P.142",
+      exp: "專用止血紗布（含促凝劑）填塞後加壓 3 分鐘；若使用普通未加藥紗布，需徒手加壓至少 10 分鐘始能形成穩固血栓。"
+    },
+    {
+      id: 26, diff: 'hard', type: 'medical',
+      q: "一名 50 歲女性第 2 型糖尿病患者，血糖值 720 mg/dL，皮膚乾燥脫水，無明顯酮酸味呼吸，血壓 92/54 mmHg，昏睡。最可能的診斷與主要院前處置為何？",
+      opts: ["低血糖症 → 口服高濃度糖水", "糖尿病酮酸中毒（DKA） → 現場皮下注射胰島素", "高滲透壓高血糖狀態（HHS） → 建立靜脈管路並補充生理食鹽水", "急性中風 → 給予降血壓藥"],
+      ans: 2, src: "教科書 P.239",
+      exp: "第 2 型糖尿病、極高血糖（>600 mg/dL）、無深大酮酸味呼吸為高滲透壓高血糖狀態（HHS），到院前核心救命處置為大量靜脈輸液改善脫水。"
+    },
+    {
+      id: 27, diff: 'hard', type: 'medical',
+      q: "男性 30 歲昏倒於浴室，呼吸僅 6 次/分伴隨鼾聲，脈搏緩慢，雙側瞳孔呈針尖狀（Pinpoint pupils），鼠蹊部留有注射針筒。該病患最可能屬於何種中毒症候群？",
+      opts: ["交感神經興奮類中毒", "抗膽鹼類中毒", "鴉片類藥物（Opioids）過量中毒", "有機磷農藥中毒"],
+      ans: 2, src: "教科書 P.241",
+      exp: "鴉片類中毒三聯徵：中樞昏迷、呼吸抑制（<10次/分）、針狀瞳孔；現場首要為維持呼吸道與 BVM 輔助通氣。"
+    },
+    {
+      id: 28, diff: 'hard', type: 'airway',
+      q: "病患張口呼吸喘，使用攜帶式 D 規格鋼瓶以簡單面罩給氧 6 L/min。壓力錶顯示 1500 psi，安全殘壓 200 psi，鋼瓶係數 0.18，該鋼瓶可用時間約為多少？",
+      opts: ["15 分鐘", "25 分鐘", "39 分鐘", "50 分鐘"],
+      ans: 2, src: "教科書 P.226",
+      exp: "可用時間 = (1500 - 200) × 0.18 ÷ 6 = 1300 × 0.18 ÷ 6 = 39 分鐘。"
+    },
+    {
+      id: 29, diff: 'hard', type: 'medical',
+      q: "遭毒蛇咬傷時，下列到院前處理原則何者最為正確？",
+      opts: ["立即用刀片十字切開傷口並用嘴用力吸出毒血", "在傷口近心端以動脈止血帶緊緊綁死阻斷動脈血流", "脫除患肢所有戒指飾品，以彈性繃帶做包紮固定並維持與心臟同高", "患部給予強力冰敷以減緩毒素擴散"],
+      ans: 2, src: "教科書 P.366",
+      exp: "毒蛇咬傷禁忌切開、嘴吸、冰敷與動脈止血帶；應儘速取下飾品防腫脹壞死，彈性包紮並固定患肢送醫。"
+    },
+    {
+      id: 30, diff: 'hard', type: 'trauma',
+      q: "使用小兒評估三角（PAT）觀察病童：若病童呈現「外觀異常（眼神呆滯無互動）、呼吸做功正常、皮膚循環蒼白發紺」，初步臨床臆斷為何？",
+      opts: ["呼吸窘迫", "呼吸衰竭", "失代償性休克（低血壓性休克）", "代償性休克"],
+      ans: 2, src: "教科書 P.296",
+      exp: "若僅皮膚循環單獨受損為代償性休克；一旦外觀（中樞灌流與意識）受損合併周邊循環不良，即落入失代償性休克。"
+    },
+
+    // 🟣 高階情境連鎖題組（4 題完整關聯）
+    {
+      id: 101, diff: 'boss', type: 'boss-case',
+      scenario: "【火場氣爆複合重症情境】EMT-2 抵達鐵皮工廠氣爆火災現場。30歲男性（體重 70 kg）自行爬出後倒地，主訴呼吸極度困難與全身劇痛。現場鼻毛焦黑、說話聲音沙啞伴隨吸氣喘鳴（Stridor）；整面胸腹部（18%）、整隻左手臂（9%）及雙大腿（18%）呈現二度至三度焦黑水泡脫屑；BP 78/46 mmHg、HR 136 bpm、SpO2 86%。",
+      q: "【第 1 題】評估該傷病患目前最急迫危及生命的處置優先順序為何？",
+      opts: [
+        "立即塗抹燒燙傷藥膏並對大腿進行冰敷",
+        "鼻毛焦黑且聲音沙啞提示吸入性灼傷氣道水腫，應立即給予高濃度純氧並備妥進階呼吸道防窒息",
+        "立即在雙大腿與左手施打三條止血帶",
+        "請病患自行大量飲用電解質水以防脫水"
+      ],
+      ans: 1, src: "教科書 P.190, P.225",
+      exp: "吸入性灼傷伴隨聲音沙啞與 Stridor 提示上呼吸道急速水腫窒息，呼吸道管理（Airway）永遠最優先。"
+    },
+    {
+      id: 102, diff: 'boss', type: 'boss-case',
+      scenario: "【火場氣爆複合重症情境續題】傷患呼吸道處置完畢後，救護人員評估其二度至三度體表面積（%TBSA）。",
+      q: "【第 2 題】依據成人「九則定律（Rule of Nines）」，該病患二至三度燒傷面積總合為多少？",
+      opts: ["27%", "36%", "45%", "54%"],
+      ans: 2, src: "教科書 P.190",
+      exp: "胸腹部全域（18%）+ 整隻左手臂（9%）+ 雙大腿（9% + 9% = 18%）= 18 + 9 + 18 = 45%。"
+    },
+    {
+      id: 103, diff: 'boss', type: 'boss-case',
+      scenario: "【火場氣爆複合重症情境續題】傷患體重 70 kg，二至三度燒燙傷面積確認為 45%，現場呈現低血壓休克。",
+      q: "【第 3 題】依據 Parkland 公式（4 mL × kg × %TBSA），受傷後前 8 小時應輸注之平衡鹽輸液量為何？",
+      opts: ["3,150 mL", "6,300 mL", "12,600 mL", "5,040 mL"],
+      ans: 1, src: "教科書 P.192",
+      exp: "24 小時總輸液量 = 4 × 70 × 45 = 12,600 mL。受傷後最初 8 小時給予半量：12,600 ÷ 2 = 6,300 mL。"
+    },
+    {
+      id: 104, diff: 'boss', type: 'boss-case',
+      scenario: "【火場氣爆複合重症情境續題】救護車運送途中，病患突然意識喪失，監測器脈搏血氧儀顯示 SpO2 99%，但病患嘴唇呈現櫻桃紅色。",
+      q: "【第 4 題】下列關於脈搏血氧儀數值之解讀與後續處置，何者最正確？",
+      opts: [
+        "SpO2 99% 代表血氧非常充足，可立即調降氧氣流量為鼻導管 2 L/min",
+        "一氧化碳中毒會使一般血氧儀產生偽性正常（99%），切勿被騙，必須持續給予 NRM 100% 高濃度純氧置換碳氧血紅素",
+        "立即給予口服降血壓藥",
+        "立即拔除所有靜脈輸液管路"
+      ],
+      ans: 1, src: "教科書 P.241",
+      exp: "一氧化碳與血紅素結合力是氧氣的 200 倍以上，傳統雙波長血氧儀無法分辨碳氧血紅素（HbCO），會偽性顯示高讀數。首要處置仍為 100% 氧氣。"
+    }
   ];
 
-  function ensureFullQuestionPool() {
-    let currentId = 200;
-    while (QUESTION_BANK.length < 200) {
-      currentId++;
-      const types = ['law', 'airway', 'cpr', 'trauma', 'medical', 'pediatric'];
-      const chosenType = types[QUESTION_BANK.length % types.length];
-      const diffs = ['easy', 'medium', 'hard'];
-      const chosenDiff = diffs[QUESTION_BANK.length % diffs.length];
-      QUESTION_BANK.push({
-        id: currentId, diff: chosenDiff, type: chosenType,
-        q: `【綜合演練題 ${currentId}】根據中級救護技術員標準處置規範，針對 ${chosenType.toUpperCase()} 急重症評估，下列臨床決策何者最符合標準？`,
-        opts: ["依標準作業程序（SOP）優先確保現場安全與關鍵生理維持", "直接跳過初步評估進入詳細神經學檢查", "遇到休克病患一律延遲送醫於現場觀察 30 分鐘", "擅自開立未經預立醫囑核可之處方藥物"],
-        ans: 0, src: `教科書第 ${((currentId % 18) + 1)} 章`,
-        exp: "救護技術員在到院前應嚴格遵循安全第一、XABCDE 順序處置與標準醫療指導權限。"
-      });
-    }
-  }
-  ensureFullQuestionPool();
-
+  // 狀態變數
   let isFormalExamMode = false;
   let activeExamConfig = null;
   let examTimerInterval = null;
@@ -335,8 +782,15 @@
   let trendChartInstance = null;
   let currentStudent = { name: '', unit: '', email: '' };
 
-  const diffLabels = { all: '🌟 全難度臨床綜合', easy: '🟢 基礎核心階梯', medium: '🟡 臨床鑑別階梯', hard: '🔴 決策處置階梯', boss: '🟣 高階情境題組' };
+  const diffLabels = {
+    all: '🌟 全難度臨床綜合',
+    easy: '🟢 基礎核心階梯',
+    medium: '🟡 臨床鑑別階梯',
+    hard: '🔴 決策處置階梯',
+    boss: '🟣 高階情境題組'
+  };
 
+  // 洗牌演算法（Fisher-Yates）
   function shuffle(array) {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -344,6 +798,18 @@
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
+  }
+
+  // 題目的選項隨機洗牌，避免答案固定在同一選項
+  function randomizeOptions(q) {
+    const originalAnswerText = q.opts[q.ans];
+    const shuffledOpts = shuffle(q.opts);
+    const newAnsIndex = shuffledOpts.indexOf(originalAnswerText);
+    return {
+      ...q,
+      opts: shuffledOpts,
+      ans: newAnsIndex
+    };
   }
 
   window.addEventListener('DOMContentLoaded', () => { checkUrlForExamParams(); });
@@ -429,15 +895,21 @@
 
   function startQuizEngine(diff, reqCount, timeLimitMinutes) {
     let pool = [];
-    if (diff === 'boss') { pool = QUESTION_BANK.filter(q => q.diff === 'boss'); }
-    else if (diff === 'all') { pool = shuffle(QUESTION_BANK); }
-    else {
+    if (diff === 'boss') {
+      pool = QUESTION_BANK.filter(q => q.diff === 'boss');
+    } else if (diff === 'all') {
+      pool = shuffle(QUESTION_BANK);
+    } else {
       pool = QUESTION_BANK.filter(q => q.diff === diff);
-      if (pool.length < reqCount) { pool = [...pool, ...QUESTION_BANK.filter(q => q.diff !== diff)]; }
+      if (pool.length < reqCount) {
+        pool = [...pool, ...QUESTION_BANK.filter(q => q.diff !== diff)];
+      }
       pool = shuffle(pool);
     }
 
-    currentQuizList = pool.slice(0, Math.min(reqCount, pool.length));
+    const selectedPool = pool.slice(0, Math.min(reqCount, pool.length));
+    // 每一題的選項都進行洗牌，確保答案分布完全隨機
+    currentQuizList = selectedPool.map(q => randomizeOptions(q));
     userAnswers = currentQuizList.map(() => ({ selected: null, correct: false }));
     currentIndex = 0;
     startTime = new Date();
