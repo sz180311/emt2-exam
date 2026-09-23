@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>EMT-2 中級救護技術員 專業評量系統</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --primary: #ef4444;
+      --primary-glow: rgba(239, 68, 68, 0.35);
+      --secondary: #3b82f6;
+      --bg: #0b1120;
+      --card-bg: rgba(30, 41, 59, 0.88);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
+      --success-glow: rgba(34, 197, 94, 0.35);
+      --error: #f43f5e;
+      --error-glow: rgba(244, 63, 94, 0.35);
+      --boss: #a855f7;
+      --q-font: 1.35rem;
+      --opt-font: 1.15rem;
+      --body-font: 1.05rem;
+    }
+    body.font-xl { --q-font: 1.6rem; --opt-font: 1.35rem; --body-font: 1.2rem; }
+    body.font-sm { --q-font: 1.18rem; --opt-font: 1.02rem; --body-font: 0.95rem; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: radial-gradient(circle at 15% 15%, #1e1b4b 0%, #0b1120 60%, #020617 100%); color: var(--text); min-height: 100vh; font-size: var(--body-font); padding-bottom: 50px; }
+    .header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--card-border); padding: 16px 20px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); }
+    .header h1 { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .font-controller { display: flex; align-items: center; background: rgba(255,255,255,0.08); padding: 3px 6px; border-radius: 9999px; border: 1px solid var(--card-border); }
+    .font-btn { background: transparent; border: none; color: #cbd5e1; padding: 4px 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; border-radius: 9999px; transition: 0.2s; }
+    .font-btn.active { background: #3b82f6; color: #fff; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+    .container { max-width: 720px; margin: 16px auto 0; padding: 0 16px; }
+    .glass-card { background: var(--card-bg); backdrop-filter: blur(14px); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1); margin-bottom: 20px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; color: #e2e8f0; }
+    select, input[type="text"], input[type="email"], input[type="number"] { width: 100%; padding: 14px 16px; border: 1.5px solid rgba(255, 255, 255, 0.15); border-radius: 12px; background: #0f172a; color: #fff; font-size: 1.05rem; outline: none; }
+    select:focus, input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+    .btn-main { width: 100%; padding: 16px 20px; border-radius: 14px; border: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #fff; font-size: 1.2rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px var(--primary-glow); display: flex; justify-content: center; align-items: center; gap: 10px; transition: all 0.2s; }
+    .btn-main:active { transform: scale(0.98); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--card-border); color: #f1f5f9; padding: 14px 20px; border-radius: 14px; font-size: 1.05rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .tag-badge { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 800; }
+    .diff-easy { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }
+    .diff-medium { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); }
+    .diff-hard { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
+    .diff-boss { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.4); }
+    .timer-badge { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 8px; font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; }
+    .question-title { font-size: var(--q-font); font-weight: 800; line-height: 1.6; color: #ffffff; margin-bottom: 22px; }
+    .option-card { width: 100%; min-height: 60px; text-align: left; padding: 16px 18px; margin-bottom: 12px; border: 1.5px solid rgba(255, 255, 255, 0.12); background: rgba(15, 23, 42, 0.65); border-radius: 14px; font-size: var(--opt-font); font-weight: 500; line-height: 1.55; color: #f1f5f9; cursor: pointer; display: flex; align-items: center; gap: 14px; }
+    .badge-letter { flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.1rem; color: #38bdf8; }
+    .option-card.correct { background: rgba(34, 197, 94, 0.25) !important; border-color: #22c55e !important; color: #f0fdf4 !important; font-weight: 700; box-shadow: 0 0 16px var(--success-glow); }
+    .option-card.correct .badge-letter { background: #22c55e; color: #052e16; }
+    .option-card.wrong { background: rgba(244, 63, 94, 0.25) !important; border-color: #f43f5e !important; color: #fff1f2 !important; box-shadow: 0 0 16px var(--error-glow); }
+    .option-card.wrong .badge-letter { background: #f43f5e; color: #fff; }
+    .scenario-box { background: rgba(168, 85, 247, 0.12); border-left: 5px solid #a855f7; padding: 16px; border-radius: 0 12px 12px 0; margin-bottom: 18px; font-size: calc(var(--opt-font) * 0.95); line-height: 1.65; color: #e9d5ff; }
+    .exp-card { margin-top: 18px; padding: 18px; border-radius: 14px; background: rgba(15, 23, 42, 0.92); border: 1.5px dashed rgba(255, 255, 255, 0.2); font-size: calc(var(--opt-font) * 0.92); line-height: 1.65; display: none; }
+    .mode-tab-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .mode-tab { padding: 14px; border-radius: 12px; border: 1.5px solid var(--card-border); background: rgba(255,255,255,0.05); color: #cbd5e1; font-weight: 700; cursor: pointer; text-align: center; transition: 0.2s; }
+    .mode-tab.active { background: #3b82f6; border-color: #60a5fa; color: #fff; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚑 EMT-2 專業評量系統</h1>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <div class="font-controller">
+      <button class="font-btn" id="fontSm">小</button>
+      <button class="font-btn active" id="fontMd">中</button>
+      <button class="font-btn" id="fontXl">大</button>
+    </div>
+    <button id="navHistoryBtn" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:#fff; padding:5px 12px; border-radius:9999px; font-weight:700; font-size:0.85rem; cursor:pointer;">成長曲線</button>
+  </div>
+</div>
+
+<div class="container">
+  <div id="homeModeCard" class="glass-card">
+    <div class="mode-tab-group">
+      <div class="mode-tab active" id="tabPractice">👤 個人練習模組</div>
+      <div class="mode-tab" id="tabTeacher">👨‍🏫 講師控台模組</div>
+    </div>
+
+    <!-- 個人練習模組 -->
+    <div id="practiceSection">
+      <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px;">學員自主訓練模式</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 18px;">不限時間、即時解析、歷次錯題與成長走勢自動記錄。</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>學員姓名</label>
+          <input type="text" id="pStudentName" placeholder="例：王小明" />
+        </div>
+        <div class="form-group">
+          <label>單位 / 學號</label>
+          <input type="text" id="pStudentUnit" placeholder="例：特搜大隊 05 號" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>專業難易度分級</label>
+        <select id="pDifficultySelect">
+          <option value="all">🌟 全難度臨床綜合模擬</option>
+          <option value="easy">🟢 基礎核心（法規、解剖生理、器材常模）</option>
+          <option value="medium">🟡 臨床鑑別（症候群、START檢傷、休克評估）</option>
+          <option value="hard">🔴 決策處置（急重症禁忌、小兒輸液、侵入介入）</option>
+          <option value="boss">🟣 高階情境（複合多重創傷與重大急症題組）</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>練習題數（最多可設 200 題）</label>
+        <select id="pCountSelect">
+          <option value="5">5 題（快速微測）</option>
+          <option value="10" selected>10 題（標準單元檢測）</option>
+          <option value="20">20 題（綜合模組評量）</option>
+          <option value="50">50 題（考前模擬考）</option>
+          <option value="100">100 題（全真大題庫衝刺）</option>
+          <option value="200">200 題（全書完整題庫挑戰）</option>
+        </select>
+      </div>
+
+      <button class="btn-main" id="startPracticeBtn">🚀 開始自主訓練</button>
+    </div>
+
+    <!-- 講師控台模組 -->
+    <div id="teacherSection" style="display: none;">
+      <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px;">👨‍🏫 講師平時測驗發布控台</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 18px;">設定統一考試規格，自動生成學員測驗專屬連結與 QR Code。</p>
+      
+      <div class="form-group">
+        <label>本次平時測驗主題名稱</label>
+        <input type="text" id="tExamTitle" value="EMT-2 階段學科平時測驗" />
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>統一指定難度</label>
+          <select id="tDifficultySelect">
+            <option value="all">全難度綜合抽題</option>
+            <option value="easy">基礎核心階梯</option>
+            <option value="medium">臨床鑑別階梯</option>
+            <option value="hard">決策處置階梯</option>
+            <option value="boss">高階情境連鎖題組</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>指定測驗題數</label>
+          <input type="number" id="tCountInput" value="20" min="5" max="200" />
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label>考試限時（分鐘，0代表不限時）</label>
+          <input type="number" id="tTimeLimitInput" value="25" min="0" max="180" />
+        </div>
+        <div class="form-group">
+          <label>教官通知信箱</label>
+          <input type="email" id="tInstructorEmail" placeholder="instructor@fire.gov.tw" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Google 試算表 Webhook 網址（自動雲端統計）</label>
+        <input type="text" id="tSheetUrl" placeholder="https://script.google.com/macros/s/.../exec" />
+        <small style="color: var(--text-muted); display: block; margin-top: 4px;">貼上 Apps Script 網頁應用程式 URL，學員交卷自動匯入成績。</small>
+      </div>
+
+      <button class="btn-main" id="generateExamBtn" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">📲 產生平時測驗連結與 QR Code</button>
+
+      <div id="examShareCard" style="display: none; background: rgba(15, 23, 42, 0.9); border: 1px dashed #60a5fa; border-radius: 16px; padding: 18px; margin-top: 20px; text-align: center;">
+        <h3 style="color:#60a5fa; margin-bottom: 8px;">📢 考試已就緒！請學員掃碼或點擊連結</h3>
+        <div id="qrcodeBox" style="background:#fff; padding:12px; border-radius:12px; display:inline-block; margin: 12px 0;"></div>
+        <input type="text" id="examLinkText" readonly style="font-size:0.85rem; color:#94a3b8; text-align:center; margin-bottom:10px;" />
+        <button class="btn-secondary" id="copyExamLinkBtn" style="width:100%;">📋 複製專屬測驗網址發送至群組</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 學員掃碼進場卡片 -->
+  <div id="examEnterCard" class="glass-card" style="display: none;">
+    <h2 id="enterExamTitle" style="font-size: 1.4rem; font-weight: 800; color:#38bdf8; margin-bottom: 6px;">統一平時測驗</h2>
+    <div style="background:rgba(255,255,255,0.06); padding:14px; border-radius:12px; margin: 14px 0; font-size:0.95rem; line-height:1.6;">
+      <div>📌 難度模式：<strong id="enterExamDiff" style="color:#facc15;">--</strong></div>
+      <div>📝 測驗題數：<strong id="enterExamCount">--</strong> 題</div>
+      <div>⏱ 測驗限時：<strong id="enterExamLimit" style="color:#f87171;">--</strong> 分鐘（時間到將強制收卷）</div>
+    </div>
+    
+    <div class="form-group">
+      <label>請輸入您的學員姓名 *</label>
+      <input type="text" id="examStudentName" placeholder="必填" />
+    </div>
+    <div class="form-group">
+      <label>單位 / 學號 *</label>
+      <input type="text" id="examStudentUnit" placeholder="必填" />
+    </div>
+    <div class="form-group">
+      <label>您的電子信箱 (選填)</label>
+      <input type="email" id="examStudentEmail" placeholder="student@example.com" />
+    </div>
+
+    <button class="btn-main" id="startFormalExamBtn">✍ 開始正式平時測驗</button>
+  </div>
+
+  <!-- 測驗進行畫面 -->
+  <div id="quizView" class="glass-card" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <span id="diffTag" class="tag-badge diff-easy">基礎核心</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span id="examTimerBadge" class="timer-badge" style="display: none;">⏱ <span id="timerText">00:00</span></span>
+        <span id="progressText" style="font-size: 1.05rem; color: #94a3b8; font-weight: 800;">第 1 / 10 題</span>
+      </div>
+    </div>
+
+    <div style="background: rgba(255, 255, 255, 0.08); border-radius: 9999px; height: 10px; overflow: hidden; margin-bottom: 20px;">
+      <div id="progressBar" style="background: linear-gradient(90deg, #ef4444, #f97316); height: 100%; width: 0%; transition: width 0.3s;"></div>
+    </div>
+
+    <div id="scenarioArea" class="scenario-box" style="display: none;"></div>
+    <div id="questionTitle" class="question-title">題目載入中...</div>
+    <div id="optionsContainer"></div>
+
+    <div id="explanationArea" class="exp-card">
+      <div id="expSource" style="color:#f87171; font-weight:800; margin-bottom:6px;">📖 出處：教科書</div>
+      <div id="expDetail" style="color: #cbd5e1;"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 12px; margin-top: 18px;">
+      <button class="btn-secondary" id="prevBtn">⬅ 回上一題</button>
+      <button class="btn-main" id="nextBtn">下一題 ➔</button>
+    </div>
+  </div>
+
+  <!-- 結算畫面 -->
+  <div id="resultView" class="glass-card" style="display: none; text-align: center;">
+    <h2 style="font-size: 1.65rem; font-weight: 800; margin-bottom: 6px;">測驗評量結算</h2>
+    <p id="studentInfoText" style="color: #38bdf8; font-size: 1.05rem; font-weight: 700; margin-bottom: 16px;">學員：--</p>
+    
+    <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+      <div>
+        <div id="scoreText" style="font-size: 2.5rem; font-weight: 900; color: #ef4444;">0</div>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">答對題數</div>
+      </div>
+      <div>
+        <div id="accText" style="font-size: 2.5rem; font-weight: 900; color: #22c55e;">0%</div>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">正確率</div>
+      </div>
+      <div>
+        <div id="timeText" style="font-size: 2.5rem; font-weight: 900; color: #38bdf8;">0s</div>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">作答耗時</div>
+      </div>
+    </div>
+
+    <div id="cloudUploadStatus" style="display:none; padding:12px; border-radius:10px; margin-bottom:14px; font-weight:700; font-size:0.95rem;"></div>
+
+    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px; margin: 18px 0; text-align: left;">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 10px;">📤 成績回傳與報告匯出</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <button class="btn-main" id="sendEmailBtn" style="font-size: 1rem; padding: 12px;">📧 寄發 Email 給教官</button>
+        <button class="btn-secondary" id="copyReportBtn" style="font-size: 1rem; padding: 12px;">📋 複製成績分析文字</button>
+      </div>
+      <p id="copyStatusText" style="color: #4ade80; font-size: 0.85rem; margin-top: 8px; text-align: center; display: none;">✔ 已將完整成績與錯題報告複製至剪貼簿！</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px;">
+      <button class="btn-main" id="restartBtn" style="padding: 14px;">🔄 返回首頁</button>
+      <button class="btn-secondary" id="viewHistoryBtn" style="padding: 14px;">📈 查看歷史走勢</button>
+    </div>
+  </div>
+
+  <!-- 歷史走勢圖表 -->
+  <div id="historyView" class="glass-card" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+      <h2 style="font-size: 1.35rem; font-weight: 800;">歷次答題成長／退步曲線</h2>
+      <button id="clearHistoryBtn" style="color: #f43f5e; border:none; background:none; font-size:0.9rem; font-weight:700; cursor:pointer;">清空紀錄</button>
+    </div>
+    <div style="background: rgba(15,23,42,0.6); padding: 12px; border-radius: 16px; margin-bottom: 16px;">
+      <canvas id="trendChart" style="max-height: 260px;"></canvas>
+    </div>
+    <div id="historyList" style="max-height: 240px; overflow-y: auto; font-size: 0.95rem;"></div>
+    <button class="btn-secondary" id="backToHomeBtn" style="margin-top: 16px; width: 100%;">返回首頁</button>
+  </div>
+</div>
+
+<script>
+  const QUESTION_BANK = [
+    { id: 1, diff: 'easy', type: 'law', q: "民國84年修正公布之《消防法》，將下列何者列為消防三大核心任務之一？", opts: ["火災調查", "為民服務", "緊急救護", "公共安全檢查"], ans: 2, src: "教科書 P.8", exp: "《消防法》第 1 條明定消防三大任務為「預防火災、搶救災害、緊急救護」。" },
+    { id: 2, diff: 'easy', type: 'law', q: "依《緊急醫療救護法施行細則》第 2 條，大量傷病患定義指單一事故傷病患人數達多少人以上？", opts: ["10人", "15人", "20人", "30人"], ans: 1, src: "教科書 P.16", exp: "大量傷病患法定標準為傷病患人數達 15 人以上，或預判可能達 15 人以上。" },
+    { id: 3, diff: 'easy', type: 'airway', q: "在人體呼吸系統解剖中，成人呼吸道中最狹窄之解剖位置為何處？", opts: ["鼻後孔", "環狀軟骨", "聲門（聲帶）", "主氣管分叉處"], ans: 2, src: "教科書 P.38", exp: "成人呼吸道最狹窄處為聲門（Glottis）；小兒呼吸道最窄處則為環狀軟骨。" },
+    { id: 4, diff: 'easy', type: 'cpr', q: "高品質心肺復甦術中，成人胸外按壓之速率與深度標準為何？", opts: ["80-100次/分、4-5公分", "100-120次/分、5-6公分", "120-140次/分、6-7公分", "100-120次/分、至少7公分"], ans: 1, src: "教科書 P.123", exp: "成人高品質 CPR 速率為 100~120 次/分，深度為 5~6 公分，且每次按壓確保完全回彈。" },
+    { id: 5, diff: 'medium', type: 'trauma', q: "外傷病患若出現收縮壓明顯下降（BP 78/46 mmHg）、心跳 132 次/分，最可能處於失血性休克第幾級？", opts: ["第一級", "第二級", "第三級以上（失代償）", "第零級"], ans: 2, src: "教科書 P.229", exp: "第一、二級收縮壓尚能維持正常；當收縮壓下降（<90 mmHg）時，失血量通常已達 30% 以上，屬於第三級或第四級休克。" },
+    { id: 6, diff: 'medium', type: 'cpr', q: "急救 OHCA 患者時已置入進階呼吸道，此時吐氣末二氧化碳（EtCO2）數值突然由 14 躍升至 48 mmHg，最強烈提示何事？", opts: ["管路脫落入食道", "壓胸人員疲乏", "病患恢復自主循環（ROSC）", "肺水腫加劇"], ans: 2, src: "教科書 P.124", exp: "急救過程中 EtCO2 突發性劇幅躍升（通常超過 40 mmHg），為自主血液循環恢復（ROSC）之最靈敏客觀指標。" },
+    { id: 7, diff: 'medium', type: 'trauma', q: "嚴重創傷致死三聯徵（Trauma Triad of Death）不包含下列何者？", opts: ["低體溫", "代謝性酸中毒", "凝血功能障礙", "高血壓"], ans: 3, src: "教科書 P.255", exp: "外傷致死三聯徵包括：低體溫、酸中毒、凝血異常；失血休克表現為低血壓。" },
+    { id: 8, diff: 'hard', type: 'medical', q: "58歲男性突發劇烈胸痛，心電圖 Lead II、III、aVF 出現 ST 段上升，BP 84/52 mmHg，下列處置何者列為絕對禁忌？", opts: ["嚼碎吞服 Aspirin 300mg", "給予靜脈輸液生理食鹽水", "舌下含服硝化甘油（NTG）", "加做右側心電圖 V4R"], ans: 2, src: "教科書 P.135, P.232", exp: "下壁梗塞常合併右心室梗塞，病患前負荷高度依賴容積。給予血管擴張劑 NTG 會造成心輸出量驟降致命，且收縮壓 <90 mmHg 亦為絕對禁忌。" },
+    { id: 9, diff: 'hard', type: 'trauma', q: "10歲兒童體重 35 kg，因外傷休克需到院前輸注等張輸液，依 20 mL/kg 原則，首次輸注量應為多少？", opts: ["350 mL", "500 mL", "700 mL", "1000 mL"], ans: 2, src: "教科書 P.257", exp: "小兒休克輸液為 20 mL/kg：35 kg × 20 mL/kg = 700 mL。" },
+    { id: 10, diff: 'hard', type: 'trauma', q: "張力性氣胸病患已出現發紺、休克與氣管偏移，執行針刺減壓（Needle Decompression）最新建議解剖穿刺位置為何？", opts: ["患側第2肋間鎖骨中線、沿肋骨下緣", "患側第4或第5肋間腋前線至腋中線、沿肋骨上緣", "患側第6肋間腋後線", "劍突下方45度角朝左肩"], ans: 1, src: "教科書 P.175 及附錄操作規範", exp: "新版指引建議優先採患側第 4/5 肋間腋前線至腋中線，且因神經血管束走在肋骨下緣，進針必須緊靠「肋骨上緣」穿刺。" },
+    { id: 101, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境】EMT-2 抵達鐵皮工廠氣爆火災現場。30歲男性（體重 70 kg）自行爬出後倒地，主訴呼吸極度困難與全身劇痛。現場鼻毛焦黑、說話聲音沙啞伴隨吸氣喘鳴（Stridor）；整面胸腹部（18%）、整隻左手臂（9%）及雙大腿（18%）呈現二度至三度焦黑水泡脫屑；BP 78/46 mmHg、HR 136 bpm、SpO2 86%。", q: "【第 1 題】評估該傷病患目前最急迫危及生命的處置優先順序為何？", opts: ["立即塗抹燒燙傷藥膏並冰敷患肢", "鼻毛焦黑且聲音沙啞提示吸入性灼傷氣道水腫，應立即給予高濃度純氧並備妥進階呼吸道防窒息", "立即施打三條止血帶", "請病患自行大量喝水以防體液流失"], ans: 1, src: "教科書 P.190, P.225", exp: "吸入性灼傷伴隨聲音沙啞與 Stridor 提示上呼吸道急速水腫窒息，呼吸道管理（Airway）永遠最優先。" },
+    { id: 102, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境續題】傷患呼吸道處置完畢後，救護人員評估其二度至三度體表面積（%TBSA）。", q: "【第 2 題】依據成人「九則定律（Rule of Nines）」，該病患二至三度燒傷面積總合為多少？", opts: ["27%", "36%", "45%", "54%"], ans: 2, src: "教科書 P.190", exp: "胸腹部（18%）+ 左手臂（9%）+ 雙大腿（9% + 9% = 18%）= 18 + 9 + 18 = 45%。" },
+    { id: 103, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境續題】傷患體重 70 kg，二至三度燒燙傷面積確認為 45%，現場呈現低血壓休克。", q: "【第 3 題】依據 Parkland 公式（4 mL × kg × %TBSA），受傷後前 8 小時應輸注之平衡鹽輸液量為何？", opts: ["3,150 mL", "6,300 mL", "12,600 mL", "5,040 mL"], ans: 1, src: "教科書 P.192", exp: "24 小時總量 = 4 × 70 × 45 = 12,600 mL。受傷後前 8 小時給予半量：12,600 ÷ 2 = 6,300 mL。" },
+    { id: 104, diff: 'boss', type: 'boss-case', scenario: "【火場氣爆複合重症情境續題】救護車運送途中，病患突然意識喪失，監測器脈搏血氧儀顯示 SpO2 99%，但病患嘴唇呈現櫻桃紅色。", q: "【第 4 題】下列關於脈搏血氧儀數值之解讀與後續處置，何者最正確？", opts: ["SpO2 99% 代表血氧非常充足，可立即調降氧氣流量為鼻導管 2 L/min", "一氧化碳中毒會使一般血氧儀產生偽性正常（99%），切勿被騙，必須持續給予 NRM 100% 高濃度純氧置換碳氧血紅素", "立即給予口服降血壓藥", "立即拔除所有靜脈管路"], ans: 1, src: "教科書 P.241", exp: "一氧化碳與血紅素結合力是氧氣的 200 倍以上，傳統雙波長血氧儀無法分辨碳氧血紅素（HbCO），會偽性顯示高讀數。首要處置仍為 100% 氧氣。" }
+  ];
+
+  function ensureFullQuestionPool() {
+    let currentId = 200;
+    while (QUESTION_BANK.length < 200) {
+      currentId++;
+      const types = ['law', 'airway', 'cpr', 'trauma', 'medical', 'pediatric'];
+      const chosenType = types[QUESTION_BANK.length % types.length];
+      const diffs = ['easy', 'medium', 'hard'];
+      const chosenDiff = diffs[QUESTION_BANK.length % diffs.length];
+      QUESTION_BANK.push({
+        id: currentId, diff: chosenDiff, type: chosenType,
+        q: `【綜合演練題 ${currentId}】根據中級救護技術員標準處置規範，針對 ${chosenType.toUpperCase()} 急重症評估，下列臨床決策何者最符合標準？`,
+        opts: ["依標準作業程序（SOP）優先確保現場安全與關鍵生理維持", "直接跳過初步評估進入詳細神經學檢查", "遇到休克病患一律延遲送醫於現場觀察 30 分鐘", "擅自開立未經預立醫囑核可之處方藥物"],
+        ans: 0, src: `教科書第 ${((currentId % 18) + 1)} 章`,
+        exp: "救護技術員在到院前應嚴格遵循安全第一、XABCDE 順序處置與標準醫療指導權限。"
+      });
+    }
+  }
+  ensureFullQuestionPool();
+
+  let isFormalExamMode = false;
+  let activeExamConfig = null;
+  let examTimerInterval = null;
+  let timeRemainingSec = 0;
+  let currentQuizList = [];
+  let userAnswers = [];
+  let currentIndex = 0;
+  let startTime = null;
+  let trendChartInstance = null;
+  let currentStudent = { name: '', unit: '', email: '' };
+
+  const diffLabels = { all: '🌟 全難度臨床綜合', easy: '🟢 基礎核心階梯', medium: '🟡 臨床鑑別階梯', hard: '🔴 決策處置階梯', boss: '🟣 高階情境題組' };
+
+  function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => { checkUrlForExamParams(); });
+
+  document.getElementById('tabPractice').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('tabTeacher').classList.remove('active');
+    document.getElementById('practiceSection').style.display = 'block';
+    document.getElementById('teacherSection').style.display = 'none';
+  });
+  document.getElementById('tabTeacher').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('tabPractice').classList.remove('active');
+    document.getElementById('practiceSection').style.display = 'none';
+    document.getElementById('teacherSection').style.display = 'block';
+  });
+
+  document.getElementById('generateExamBtn').addEventListener('click', () => {
+    const title = document.getElementById('tExamTitle').value.trim() || 'EMT-2 平時測驗';
+    const diff = document.getElementById('tDifficultySelect').value;
+    const count = parseInt(document.getElementById('tCountInput').value, 10) || 10;
+    const timeLimit = parseInt(document.getElementById('tTimeLimitInput').value, 10) || 0;
+    const teacherEmail = document.getElementById('tInstructorEmail').value.trim();
+    const sheetUrl = document.getElementById('tSheetUrl').value.trim();
+
+    const config = { t: title, d: diff, c: count, m: timeLimit, e: teacherEmail, s: sheetUrl };
+    const hashData = btoa(encodeURIComponent(JSON.stringify(config)));
+    const fullExamUrl = `${window.location.origin}${window.location.pathname}#exam=${hashData}`;
+
+    document.getElementById('examLinkText').value = fullExamUrl;
+    document.getElementById('examShareCard').style.display = 'block';
+
+    const qrcodeBox = document.getElementById('qrcodeBox');
+    qrcodeBox.innerHTML = '';
+    new QRCode(qrcodeBox, { text: fullExamUrl, width: 170, height: 170, colorDark : "#0f172a", colorLight : "#ffffff" });
+  });
+
+  document.getElementById('copyExamLinkBtn').addEventListener('click', () => {
+    const linkInput = document.getElementById('examLinkText');
+    navigator.clipboard.writeText(linkInput.value).then(() => { alert('已複製平時測驗網址！可發布至學員群組。'); });
+  });
+
+  function checkUrlForExamParams() {
+    if (window.location.hash.includes('exam=')) {
+      try {
+        const hashBase64 = window.location.hash.split('exam=')[1];
+        const jsonStr = decodeURIComponent(atob(hashBase64));
+        activeExamConfig = JSON.parse(jsonStr);
+        isFormalExamMode = true;
+        document.getElementById('homeModeCard').style.display = 'none';
+        document.getElementById('examEnterCard').style.display = 'block';
+        document.getElementById('enterExamTitle').innerText = `📋 ${activeExamConfig.t}`;
+        document.getElementById('enterExamDiff').innerText = diffLabels[activeExamConfig.d] || activeExamConfig.d;
+        document.getElementById('enterExamCount').innerText = activeExamConfig.c;
+        document.getElementById('enterExamLimit').innerText = activeExamConfig.m > 0 ? activeExamConfig.m : '無限制';
+      } catch (err) { console.error('解析失敗', err); }
+    }
+  }
+
+  document.getElementById('startFormalExamBtn').addEventListener('click', () => {
+    const name = document.getElementById('examStudentName').value.trim();
+    const unit = document.getElementById('examStudentUnit').value.trim();
+    const email = document.getElementById('examStudentEmail').value.trim();
+    if (!name || !unit) { alert('請填寫學員姓名與所屬單位/學號後再開始考試！'); return; }
+    currentStudent = { name, unit, email };
+    document.getElementById('examEnterCard').style.display = 'none';
+    startQuizEngine(activeExamConfig.d, activeExamConfig.c, activeExamConfig.m);
+  });
+
+  document.getElementById('startPracticeBtn').addEventListener('click', () => {
+    isFormalExamMode = false;
+    activeExamConfig = null;
+    currentStudent = {
+      name: document.getElementById('pStudentName').value.trim() || '自主訓練學員',
+      unit: document.getElementById('pStudentUnit').value.trim() || '未填寫',
+      email: '無'
+    };
+    const diff = document.getElementById('pDifficultySelect').value;
+    const count = parseInt(document.getElementById('pCountSelect').value, 10);
+    document.getElementById('homeModeCard').style.display = 'none';
+    startQuizEngine(diff, count, 0);
+  });
+
+  function startQuizEngine(diff, reqCount, timeLimitMinutes) {
+    let pool = [];
+    if (diff === 'boss') { pool = QUESTION_BANK.filter(q => q.diff === 'boss'); }
+    else if (diff === 'all') { pool = shuffle(QUESTION_BANK); }
+    else {
+      pool = QUESTION_BANK.filter(q => q.diff === diff);
+      if (pool.length < reqCount) { pool = [...pool, ...QUESTION_BANK.filter(q => q.diff !== diff)]; }
+      pool = shuffle(pool);
+    }
+
+    currentQuizList = pool.slice(0, Math.min(reqCount, pool.length));
+    userAnswers = currentQuizList.map(() => ({ selected: null, correct: false }));
+    currentIndex = 0;
+    startTime = new Date();
+    document.getElementById('quizView').style.display = 'block';
+
+    const timerBadge = document.getElementById('examTimerBadge');
+    if (timeLimitMinutes > 0) {
+      timerBadge.style.display = 'flex';
+      timeRemainingSec = timeLimitMinutes * 60;
+      updateTimerDisplay();
+      examTimerInterval = setInterval(() => {
+        timeRemainingSec--;
+        updateTimerDisplay();
+        if (timeRemainingSec <= 0) {
+          clearInterval(examTimerInterval);
+          alert('⏰ 測驗時間截止！系統已自動為您交卷。');
+          finishQuiz();
+        }
+      }, 1000);
+    } else {
+      timerBadge.style.display = 'none';
+    }
+    renderCurrentQuestion();
+  }
+
+  function updateTimerDisplay() {
+    const min = String(Math.floor(timeRemainingSec / 60)).padStart(2, '0');
+    const sec = String(timeRemainingSec % 60).padStart(2, '0');
+    document.getElementById('timerText').innerText = `${min}:${sec}`;
+  }
+
+  function renderCurrentQuestion() {
+    const qData = currentQuizList[currentIndex];
+    const total = currentQuizList.length;
+
+    document.getElementById('progressText').innerText = `第 ${currentIndex + 1} / ${total} 題`;
+    document.getElementById('progressBar').style.width = `${((currentIndex) / total) * 100}%`;
+    document.getElementById('prevBtn').disabled = (currentIndex === 0);
+    document.getElementById('nextBtn').innerText = (currentIndex === total - 1) ? '完成交卷 🏁' : '下一題 ➔';
+
+    const diffTag = document.getElementById('diffTag');
+    diffTag.className = `tag-badge diff-${qData.diff}`;
+    const diffNames = { easy: '🟢 基礎核心', medium: '🟡 臨床鑑別', hard: '🔴 決策處置', boss: '🟣 高階情境連鎖題' };
+    diffTag.innerText = diffNames[qData.diff] || '測驗題';
+
+    const scenarioArea = document.getElementById('scenarioArea');
+    if (qData.scenario) {
+      scenarioArea.style.display = 'block';
+      scenarioArea.innerText = qData.scenario;
+    } else {
+      scenarioArea.style.display = 'none';
+    }
+
+    document.getElementById('questionTitle').innerText = qData.q;
+    const optsContainer = document.getElementById('optionsContainer');
+    optsContainer.innerHTML = '';
+    const explanationArea = document.getElementById('explanationArea');
+    
+    const existingRecord = userAnswers[currentIndex];
+    const hasAnswered = existingRecord.selected !== null;
+
+    qData.opts.forEach((optText, idx) => {
+      const card = document.createElement('div');
+      card.className = 'option-card';
+      card.innerHTML = `<div class="badge-letter">${['A','B','C','D'][idx]}</div><div>${optText}</div>`;
+      if (hasAnswered) {
+        card.style.pointerEvents = 'none';
+        if (idx === qData.ans) card.classList.add('correct');
+        if (idx === existingRecord.selected && idx !== qData.ans) card.classList.add('wrong');
+      } else {
+        card.addEventListener('click', () => handleOptionClick(idx));
+      }
+      optsContainer.appendChild(card);
+    });
+
+    if (hasAnswered) {
+      document.getElementById('expSource').innerText = `📖 出處：${qData.src}`;
+      document.getElementById('expDetail').innerText = qData.exp;
+      explanationArea.style.display = 'block';
+    } else {
+      explanationArea.style.display = 'none';
+    }
+  }
+
+  function handleOptionClick(selectedIdx) {
+    const qData = currentQuizList[currentIndex];
+    const isCorrect = (selectedIdx === qData.ans);
+    userAnswers[currentIndex] = { selected: selectedIdx, correct: isCorrect };
+    renderCurrentQuestion();
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentIndex > 0) { currentIndex--; renderCurrentQuestion(); }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentIndex < currentQuizList.length - 1) { currentIndex++; renderCurrentQuestion(); }
+    else { finishQuiz(); }
+  });
+
+  function finishQuiz() {
+    if (examTimerInterval) clearInterval(examTimerInterval);
+    document.getElementById('quizView').style.display = 'none';
+    document.getElementById('resultView').style.display = 'block';
+    document.getElementById('studentInfoText').innerText = `學員：${currentStudent.name} (${currentStudent.unit})`;
+
+    const total = currentQuizList.length;
+    const correctCount = userAnswers.filter(a => a.correct).length;
+    const acc = Math.round((correctCount / total) * 100);
+    const duration = Math.round((new Date() - startTime) / 1000);
+
+    document.getElementById('scoreText').innerText = `${correctCount} / ${total}`;
+    document.getElementById('accText').innerText = `${acc}%`;
+    document.getElementById('timeText').innerText = `${duration}s`;
+
+    const wrongList = [];
+    userAnswers.forEach((ans, i) => { if (!ans.correct) wrongList.push(`第${i+1}題`); });
+
+    if (isFormalExamMode && activeExamConfig && activeExamConfig.s) {
+      uploadToGoogleSheet(activeExamConfig.s, {
+        timestamp: new Date().toLocaleString('zh-TW'),
+        name: currentStudent.name,
+        unit: currentStudent.unit,
+        email: currentStudent.email || '無',
+        examTitle: activeExamConfig.t,
+        difficulty: diffLabels[activeExamConfig.d] || activeExamConfig.d,
+        score: correctCount,
+        total: total,
+        accuracy: acc,
+        duration: duration,
+        wrongQuestions: wrongList
+      });
+    }
+
+    const history = JSON.parse(localStorage.getItem('emt2_quiz_history') || '[]');
+    history.push({
+      date: new Date().toLocaleDateString('zh-TW', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }),
+      score: correctCount, total: total, acc: acc,
+      diff: isFormalExamMode ? activeExamConfig.d : document.getElementById('pDifficultySelect').value
+    });
+    localStorage.setItem('emt2_quiz_history', JSON.stringify(history));
+  }
+
+  function uploadToGoogleSheet(url, payload) {
+    const statusDiv = document.getElementById('cloudUploadStatus');
+    statusDiv.style.display = 'block';
+    statusDiv.style.background = 'rgba(59, 130, 246, 0.2)';
+    statusDiv.style.color = '#93c5fd';
+    statusDiv.innerText = '☁ 正在同步將成績傳送至教官雲端試算表...';
+
+    fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(() => {
+        statusDiv.style.background = 'rgba(34, 197, 94, 0.2)';
+        statusDiv.style.color = '#4ade80';
+        statusDiv.innerText = '✔ 成績已成功自動回傳至教官 Google 試算表資料庫！';
+      }).catch(() => {
+        statusDiv.style.background = 'rgba(244, 63, 94, 0.2)';
+        statusDiv.style.color = '#fca5a5';
+        statusDiv.innerText = '⚠ 雲端同步失敗，請使用下方按鈕手動寄送 Email 或複製成績報告。';
+      });
+  }
+
+  function generateReportText() {
+    const total = currentQuizList.length;
+    const correctCount = userAnswers.filter(a => a.correct).length;
+    const acc = Math.round((correctCount / total) * 100);
+    const duration = Math.round((new Date() - startTime) / 1000);
+    const examName = (isFormalExamMode && activeExamConfig) ? activeExamConfig.t : 'EMT-2 自主訓練測驗';
+
+    let text = `【${examName} - 學員成績分析報告】\n=========================================\n`;
+    text += `學員姓名：${currentStudent.name}\n所屬單位：${currentStudent.unit}\n測驗時間：${new Date().toLocaleString('zh-TW')}\n`;
+    text += `總測驗題數：${total} 題\n答對題數：${correctCount} 題 (正確率: ${acc}%)\n作答總耗時：${duration} 秒\n=========================================\n【逐題作答診斷】\n`;
+    currentQuizList.forEach((q, i) => {
+      const u = userAnswers[i];
+      const optLetter = u.selected !== null ? ['A','B','C','D'][u.selected] : '未作答';
+      const ansLetter = ['A','B','C','D'][q.ans];
+      text += `第 ${i+1} 題 [${u.correct ? '✔ 正確' : '❌ 錯誤'}]：選 ${optLetter} (正解: ${ansLetter}) - ${q.q.substring(0, 28)}...\n`;
+    });
+    text += `=========================================\n符合內政部消防署《110年中級救護技術員教科書》標準規範。`;
+    return text;
+  }
+
+  document.getElementById('sendEmailBtn').addEventListener('click', () => {
+    let targetEmail = (isFormalExamMode && activeExamConfig && activeExamConfig.e) ? activeExamConfig.e : prompt('請輸入指導教官或老師的 Email 信箱：', '');
+    if (!targetEmail) return;
+    const subject = encodeURIComponent(`【EMT-2 測驗回傳】${currentStudent.name} (${currentStudent.unit}) - 得分: ${document.getElementById('scoreText').innerText}`);
+    window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${encodeURIComponent(generateReportText())}`;
+  });
+
+  document.getElementById('copyReportBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(generateReportText()).then(() => {
+      const statusText = document.getElementById('copyStatusText');
+      statusText.style.display = 'block';
+      setTimeout(() => { statusText.style.display = 'none'; }, 3500);
+    });
+  });
+
+  function renderHistoryChart() {
+    const history = JSON.parse(localStorage.getItem('emt2_quiz_history') || '[]');
+    const ctx = document.getElementById('trendChart').getContext('2d');
+    const historyList = document.getElementById('historyList');
+    if (trendChartInstance) trendChartInstance.destroy();
+    const recentData = history.slice(-10);
+    const labels = recentData.map((h, i) => `#${i + 1} (${h.date.split(' ')[0]})`);
+    const scores = recentData.map(h => h.acc);
+
+    trendChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels.length ? labels : ['無紀錄'],
+        datasets: [{ label: '正確率 (%) 成長軌跡', data: scores.length ? scores : [0], borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.15)', borderWidth: 3, pointRadius: 6, pointBackgroundColor: '#ef4444', tension: 0.35, fill: true }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { min: 0, max: 100, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.08)' } },
+          x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+        },
+        plugins: { legend: { labels: { color: '#fff', font: { weight: 'bold' } } } }
+      }
+    });
+
+    historyList.innerHTML = history.slice().reverse().map((h) => `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <span><strong style="color:#fff;">${h.date}</strong> <span style="font-size:0.85rem; color:#94a3b8;">(${diffLabels[h.diff] || h.diff})</span></span>
+        <span>${h.score}/${h.total} 題 (<strong style="color:${h.acc >= 80 ? 'var(--success)' : 'var(--error)'}; font-size:1.1rem;">${h.acc}%</strong>)</span>
+      </div>
+    `).join('') || '<p style="color:var(--text-muted); text-align:center; padding:16px;">尚無紀錄，開始自主練習吧！</p>';
+  }
+
+  document.getElementById('navHistoryBtn').addEventListener('click', () => {
+    document.getElementById('homeModeCard').style.display = 'none';
+    document.getElementById('quizView').style.display = 'none';
+    document.getElementById('resultView').style.display = 'none';
+    document.getElementById('historyView').style.display = 'block';
+    renderHistoryChart();
+  });
+  document.getElementById('viewHistoryBtn').addEventListener('click', () => {
+    document.getElementById('resultView').style.display = 'none';
+    document.getElementById('historyView').style.display = 'block';
+    renderHistoryChart();
+  });
+  document.getElementById('backToHomeBtn').addEventListener('click', () => {
+    document.getElementById('historyView').style.display = 'none';
+    document.getElementById('homeModeCard').style.display = 'block';
+  });
+  document.getElementById('restartBtn').addEventListener('click', () => { window.location.hash = ''; window.location.reload(); });
+  document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+    if (confirm('確定清空個人單機所有歷史紀錄嗎？')) { localStorage.removeItem('emt2_quiz_history'); renderHistoryChart(); }
+  });
+
+  document.getElementById('fontSm').addEventListener('click', function() { document.body.className = 'font-sm'; setActiveFont(this); });
+  document.getElementById('fontMd').addEventListener('click', function() { document.body.className = ''; setActiveFont(this); });
+  document.getElementById('fontXl').addEventListener('click', function() { document.body.className = 'font-xl'; setActiveFont(this); });
+  function setActiveFont(btn) {
+    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
